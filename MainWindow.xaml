@@ -1,0 +1,147 @@
+﻿<Window x:Class="EmployeesList.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeesList"
+        mc:Ignorable="d"
+        Title="Приложение для редактирования списка сотрудников" 
+        Height="450" 
+        Width="800" 
+        Loaded="Window_Loaded" 
+        Closing="Window_Closing">
+    
+    <StackPanel>
+        <Menu x:Name="menuMainMenu">
+            <MenuItem x:Name="menuItemTableSelection" 
+                      Header="Выбор таблицы">
+                <MenuItem Name="menuItemEmployees" 
+                          Header="Сотрудники" 
+                          Click="menuItemEmployees_Click"/>
+                <MenuItem Name="menuItemDepartments" 
+                          Header="Подразделения" 
+                          Click="menuItemDepartments_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="menuItemTableActions" 
+                      Header="Действия">
+                <MenuItem Name="menuItemAddItem" 
+                          Header="Добавить строку" 
+                          Click="menuItemAddItem_Click"/>
+                <MenuItem Name="menuItemDeleteItem" 
+                          Header="Удалить строку" 
+                          Click="menuItemDeleteItem_Click"/>
+            </MenuItem>
+        </Menu>
+        
+        <Grid>
+            <DataGrid Name="dataGridEmployeesList" 
+                      AutoGenerateColumns="False" 
+                      CanUserAddRows="False" 
+                      PreviewKeyDown="dataGridEmployeesList_PreviewKeyDown" >
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Employee Id" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Id}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="First Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FirstName}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding FirstName}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Last Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding LastName}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding LastName}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Occupation">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Occupation}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Occupation}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Department Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Expander Header="{Binding CurrentDepartment}">
+                                    <StackPanel>
+                                        <WrapPanel>
+                                            <TextBlock Text="Department Id: "/>
+                                            <TextBlock Text="{Binding CurrentDepartment.Id}"/>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <TextBlock Text="Department Name: "/>
+                                            <TextBlock Text="{Binding CurrentDepartment.Name}"/>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Expander>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding DepartmentList}" 
+                                    SelectedItem="{Binding CurrentDepartment, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <DataGrid Name="dataGridDepartmentList" 
+                      AutoGenerateColumns="False"  
+                      CanUserAddRows="False" 
+                      Visibility="Collapsed" 
+                      PreviewKeyDown="dataGridDepartmentList_PreviewKeyDown">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Department Id" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Id}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Department Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Name}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </StackPanel>
+</Window>
